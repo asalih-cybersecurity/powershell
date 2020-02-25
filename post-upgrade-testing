@@ -1,4 +1,4 @@
-﻿Write-host "****************************************************" -ForegroundColor Red -BackgroundColor White
+Write-host "****************************************************" -ForegroundColor Red -BackgroundColor White
 Write-host "****************************************************" -ForegroundColor Red -BackgroundColor White
 Write-host "********************Tested on: *********************" -ForegroundColor Red -BackgroundColor White
 Get-date -DisplayHint DateTime
@@ -15,19 +15,32 @@ else
 Write-Host "Office is Not Installed in this Machine!"
 }
 
-#Check Desktop Needed Files
+####Check Desktop Needed Files 
 $files = Get-ChildItem -Path C:\Users\Public\Desktop
-$files.Count
+
 foreach ($file in $files) 
 { 
 if ($file.name -clike "*Drives*")
 { Write-Host $file.Name "...Installed" -ForegroundColor Red -BackgroundColor White }
 
-Else { if ($file.name -like "*Epson*")
+Else { if (!($file.name -like "*Epson*"))
+{ Write-Host $file.Name "...Installed" -ForegroundColor Red -BackgroundColor White }
+    
+Else { if ($file.name -like "*Chrome*")
 { Write-Host $file.Name "...Installed" -ForegroundColor Red -BackgroundColor White }
 
-Else { if ($file.name -ccontains "*Chrome*")
-{ Write-Host $file.Name "...Installed" -ForegroundColor Red -BackgroundColor White }
-else  {Write-Host "kk"}
 }}}
 
+#Check if the shortcut files are on the Desktop 
+
+if (Test-Path -Path "C:\Users\Public\Desktop\*Chrome*")
+{Write-Host "Chrome is Installed" -ForegroundColor White -BackgroundColor Green}
+else {Write-Host "Chrome is missing!" -ForegroundColor Red -BackgroundColor Yellow}
+
+if (Test-Path -Path "C:\Users\Public\Desktop\*Drives*")
+{Write-Host "Drives is Installed" -ForegroundColor White -BackgroundColor Green}
+else {Write-Host "Drives is missing!" -ForegroundColor Red -BackgroundColor Yellow}
+
+if (Test-Path -Path "C:\Users\Public\Desktop\*Scanner*")
+{Write-Host "Scanner bat file is Placed" -ForegroundColor White -BackgroundColor Green}
+else {Write-Host "Scanner bat file is missing!" -ForegroundColor Red -BackgroundColor Yellow}
